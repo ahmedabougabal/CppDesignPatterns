@@ -53,11 +53,9 @@ public:
       {
         delete[] drink[index];
       }
-      else
-      {
-        drink[index] = new char[strlen(drink_name) + 1]; // adding 1 to account for the null terminated string as the string is an array of characters
-        strcpy(drink[index], drink_name);                // copy drink name to destination drink[index]
-      }
+
+      drink[index] = new char[strlen(drink_name) + 1]; // adding 1 to account for the null terminated string as the string is an array of characters
+      strcpy(drink[index], drink_name);                // copy drink name to destination drink[index]
     }
   }
 
