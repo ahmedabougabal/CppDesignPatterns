@@ -71,9 +71,7 @@ public:
     {
       if (drink[i] != nullptr)
       {
-        ss << drink;
-        ss << i;
-        ss << drink[i];
+        ss << drink[i] << " ";
       }
     }
     return ss.str();
