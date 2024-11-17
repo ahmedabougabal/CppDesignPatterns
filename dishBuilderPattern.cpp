@@ -33,7 +33,9 @@ public:
 class Drink
 {
 protected:
-  char *drink[10]; // *  array of 10 char pointers
+  char *drink[10];      // *  array of 10 char pointers
+  int currentDrink = 0; //! this is an attempt to make the class Drink Indepdendent
+
 public:
   Drink()
   {
@@ -44,24 +46,28 @@ public:
     }
   }
 
-  void setDrink(int index, const char *drink_name)
+  void setDrink(const char *drink_name)
   {
     // if index is valid, we allocate memory for the new string
-    if (index >= 0 && index < 10) // validation for safety
+    if (this->currentDrink < 10) // validation for safety
     {
-      if (drink[index] != nullptr)
+      if (drink[currentDrink] != nullptr)
       {
-        delete[] drink[index];
+        delete[] drink[currentDrink];
       }
 
-      drink[index] = new char[strlen(drink_name) + 1]; // adding 1 to account for the null terminated string as the string is an array of characters
-      strcpy(drink[index], drink_name);                // copy drink name to destination drink[index]
+      drink[currentDrink] = new char[strlen(drink_name) + 1]; // adding 1 to account for the null terminated string as the string is an array of characters
+      strcpy(drink[currentDrink], drink_name);                // copy drink name to destination drink[index]
     }
   }
 
-  char *getDrink(int index)
+  char *getDrink()
   {
-    return drink[index];
+    if (currentDrink > 0 && drink[currentDrink - 1] != nullptr)
+    {
+      return drink[currentDrink];
+    }
+    return "no drink set";
   }
 
   string printDrinks()
@@ -89,17 +95,46 @@ public:
 class MealCombo
 {
 private:
-  Dish *dish;
-  Side *side;
-  Drink *drink;
+  Dish *dish = nullptr;
+  Side *side = nullptr;
+  Drink *drink = nullptr;
   char bag[100];
 
 public:
   stringstream ss;
 
+  const char *get_meal_box()
+  {
+    stringstream ss;
+    if (drink)
+    {
+      ss << drink->getDrink();
+    }
+    else
+    {
+      ss << "no drinks in the meal box";
+    }
+    if (dish)
+    {
+      ss << dish->getDish();
+    }
+    else
+    {
+      ss << "no dish item here";
+    }
+    if (side)
+    {
+      ss << side->getSide();
+    }
+    else
+    {
+      ss << "no side items here";
+    }
+  }
+
   MealCombo(const char *type)
   {
-    ss << "bag" << type;
+    ss << "bag" << bag << " and has a type of  " << type;
     cout << ss.str();
   }
 };
