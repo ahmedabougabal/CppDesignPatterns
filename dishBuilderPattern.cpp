@@ -8,10 +8,18 @@ using namespace std;
 
 class Dish
 {
+private:
+  string dish;
+
 protected:
   char _dish[10];
 
 public:
+  void setDish(const string &dish)
+  {
+    this->dish = dish;
+  }
+
   const char *getDish()
   {
     return _dish;
@@ -130,6 +138,8 @@ public:
     {
       ss << "no side items here";
     }
+    string result = ss.str();
+    return result.c_str();
   }
 
   MealCombo(const char *type)
@@ -138,6 +148,17 @@ public:
     cout << ss.str();
   }
 };
+
+int main()
+{
+  MealCombo *meal = new MealCombo("Cheat meal");
+  Drink *drink = new Drink();
+  drink->setDrink("apple juice");
+  Dish *dish_ptr = new Dish();
+  dish_ptr->setDish("chicks");
+  cout << meal->get_meal_box();
+  return 0;
+}
 
 /*
 sth i would like to add : strings are an array of characters and the last char is called a null terminated string
