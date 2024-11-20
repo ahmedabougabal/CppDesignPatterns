@@ -1,6 +1,7 @@
-#include "stdafx.h"
+// #include "stdafx.h" //! comment this line out inside Visual studio not vs code
 #include <iostream>
 #include <sstream>
+#include <string.h>
 
 using namespace std;
 
