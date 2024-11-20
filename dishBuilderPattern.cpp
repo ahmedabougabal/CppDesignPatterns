@@ -3,6 +3,7 @@
 #include <cstdio> // For sprintf_s (requires a buffer size param to prevent buffer overflows)
 /* we can also use stringstream instead of sprintf_s */
 #include <sstream>
+#include <string.h>
 using namespace std;
 // understanding the (builder pattern implementation)
 
@@ -11,92 +12,85 @@ class Dish
 private:
   string dish;
 
-protected:
-  char _dish[10];
-
 public:
   void setDish(const string &dish)
   {
     this->dish = dish;
   }
 
-  const char *getDish()
+  const string &getDish() const
   {
-    return _dish;
+    return this->dish;
   }
 };
 
 class Side
 {
-protected:
-  char _side[10];
+private:
+  string side;
 
 public:
-  const char *getSide()
+  void setSide(const string &inp_side)
   {
-    return _side;
+    this->side = inp_side;
+  }
+
+  const string &getSide() const
+  {
+    return this->side;
   }
 };
 
 class Drink
 {
 protected:
-  char *drink[10];      // *  array of 10 char pointers
+  string drinks[10];
   int currentDrink = 0; //! this is an attempt to make the class Drink Indepdendent
 
 public:
   Drink()
   {
-    cout << "fill cup with orange juice\n";
-    for (int i = 0; i < 10; ++i)
-    {
-      drink[i] = nullptr;
-    }
+    cout << "\nInitializing drinks refills...\n";
   }
 
-  void setDrink(const char *drink_name)
+  void setDrink(const string &drink_name)
   {
     // if index is valid, we allocate memory for the new string
     if (this->currentDrink < 10) // validation for safety
     {
-      if (drink[currentDrink] != nullptr)
-      {
-        delete[] drink[currentDrink];
-      }
-
-      drink[currentDrink] = new char[strlen(drink_name) + 1]; // adding 1 to account for the null terminated string as the string is an array of characters
-      strcpy(drink[currentDrink], drink_name);                // copy drink name to destination drink[index]
+      drinks[currentDrink++] = drink_name;
+      cout << "added drink: " << drink_name << endl;
     }
-  }
-
-  char *getDrink()
-  {
-    if (currentDrink > 0 && drink[currentDrink - 1] != nullptr)
+    else
     {
-      return drink[currentDrink];
+      cout << "drinks capacity has been reached" << endl;
     }
-    return "no drink set";
   }
 
-  string printDrinks()
+  string getDrink() const
+  {
+    if (currentDrink > 0)
+    {
+      return drinks[currentDrink - 1];
+    }
+    else
+    {
+      return "no drinks have been set.";
+    }
+  }
+
+  string printDrinks() const
   {
     stringstream ss;
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < currentDrink; ++i)
     {
-      if (drink[i] != nullptr)
-      {
-        ss << drink[i] << " ";
-      }
+      ss << drinks[i];
+      if (i < currentDrink - 1)
+        ss << ", ";
     }
     return ss.str();
   }
-  ~Drink()
-  {
-    for (int i = 0; i < 10; i++)
-    {
-      delete[] drink[i];
-    }
-  };
+  // * removed destructor as i have imported string.h preprocessor directive which handles its memory deallocation
 };
 
 // Complex MealCombo object that contains an Entree, a Side and a Drink object
@@ -106,17 +100,32 @@ private:
   Dish *dish = nullptr;
   Side *side = nullptr;
   Drink *drink = nullptr;
-  char bag[100];
+  string desc;
 
 public:
-  stringstream ss;
+  // create setters for the composed objects
+  void set_dish(Dish *dish_ptr)
+  {
+    this->dish = dish_ptr;
+  }
 
-  const char *get_meal_box()
+  void set_drink(Drink *drink_ptr)
+  {
+    this->drink = drink_ptr;
+  }
+
+  void set_side(Side *side_ptr)
+  {
+    this->side = side_ptr;
+  }
+
+  string get_meal_box() const
   {
     stringstream ss;
     if (drink)
     {
-      ss << drink->getDrink();
+      ss << "drink: " << drink->getDrink();
+      ss << endl;
     }
     else
     {
@@ -124,28 +133,38 @@ public:
     }
     if (dish)
     {
-      ss << dish->getDish();
+      ss << "main dish is " << dish->getDish();
+      ss << endl;
     }
     else
     {
       ss << "no dish item here";
+      ss << endl;
     }
     if (side)
     {
-      ss << side->getSide();
+      ss << "your desserts : " << side->getSide();
+      ss << endl;
     }
     else
     {
       ss << "no side items here";
+      cout << endl;
     }
     string result = ss.str();
     return result.c_str();
   }
 
-  MealCombo(const char *type)
+  MealCombo(const string &type) : dish(nullptr), side(nullptr), drink(nullptr)
   {
-    ss << "bag" << bag << " and has a type of  " << type;
-    cout << ss.str();
+    cout << "meal combo " << type << endl;
+  }
+
+  ~MealCombo()
+  {
+    delete dish;
+    delete side;
+    delete drink;
   }
 };
 
@@ -154,9 +173,18 @@ int main()
   MealCombo *meal = new MealCombo("Cheat meal");
   Drink *drink = new Drink();
   drink->setDrink("apple juice");
+  meal->set_drink(drink);
+
+  Side *side = new Side();
+  side->setSide("konafa");
+  meal->set_side(side);
+
   Dish *dish_ptr = new Dish();
   dish_ptr->setDish("chicks");
+  meal->set_dish(dish_ptr);
+
   cout << meal->get_meal_box();
+  delete meal;
   return 0;
 }
 
