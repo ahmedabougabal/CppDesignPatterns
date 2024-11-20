@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include <memory> //* modern approach for memory handling & cleanup
 using namespace std;
 
 class Coffee
@@ -32,15 +33,15 @@ public:
 
   void prepare_coffee() const override
   {
-    cout << "preparing Cappuccino" << endl;
+    cout << "preparing " << get_type() << endl;
   }
   void brew_coffee() const override
   {
-    cout << "brewing Cappuccino" << endl;
+    cout << "brewing " << get_type() << endl;
   }
   void serve_coffee() const override
   {
-    cout << "serving Cappuccino" << endl;
+    cout << "serving " << get_type() << endl;
   }
 };
 
@@ -54,14 +55,60 @@ public:
 
   void prepare_coffee() const override
   {
-    cout << "preparing " << coffee_type << endl;
+    cout << "preparing " << get_type() << endl;
   }
   void brew_coffee() const override
   {
-    cout << "brewing " << coffee_type << endl;
+    cout << "brewing " << get_type() << endl;
   }
   void serve_coffee() const override
   {
-    cout << "serving " << coffee_type << endl;
+    cout << "serving " << get_type() << endl;
   }
 };
+
+// class coffeeMakerFactory : public Coffee (//!using inheritance is a wrong practice here )
+//* this class needs to run independently and just return coffee objects
+class coffeeMakerFactory
+{
+private:
+  // Coffee *coffee_ptr; //! will update this to a unique ptr as a best practice approach
+  unique_ptr<Coffee> coffee_ptr;
+
+public:
+  unique_ptr<Coffee> get_coffee()
+  {
+    int choice;
+    cout << "Choose the type of coffee you wish to make" << endl;
+    cout << "1 for espresso" << endl;
+    cout << "2 for Cappuccino" << endl;
+    cin >> choice;
+    switch (choice)
+    {
+    case 1:
+      this->coffee_ptr = make_unique<Espresso>();
+      // this->coffee_ptr = new Espresso();
+      break;
+    case 2:
+      this->coffee_ptr = make_unique<Cappuccino>();
+      break;
+    default:
+      cout << "Invalid choice, Try Again\n";
+      return nullptr;
+    }
+    return move(coffee_ptr); // return the create coffe object
+  }
+};
+
+int main()
+{
+  coffeeMakerFactory factory;
+  auto coffe = factory.get_coffee();
+  if (coffe)
+  {
+    coffe->prepare_coffee();
+    coffe->brew_coffee();
+    coffe->serve_coffee();
+  }
+  return 0;
+}
