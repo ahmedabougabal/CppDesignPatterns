@@ -116,3 +116,35 @@ public:
     return make_unique<ElectricEngine>();
   }
 };
+
+enum CarType
+{
+  Gasoline,
+  Electric
+};
+
+unique_ptr<Factory> createFactory(CarType t)
+{
+  switch (t)
+  {
+  case Gasoline:
+    return make_unique<GasCarFactory>();
+    break;
+  case Electric:
+    return make_unique<ElectricCarFactory>();
+    break;
+  default:
+    throw runtime_error("invalid type selection");
+  }
+}
+
+int main()
+{
+  int selection;
+  cout << "select a car you wish to build\n>> ";
+  cout << "1: Gasoline";
+  cout << "2: Electric";
+  cin >> selection;
+
+  return 0;
+}
