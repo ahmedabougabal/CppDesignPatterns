@@ -3,6 +3,7 @@
 #include <cstring>
 #include <stdexcept>
 using namespace std;
+// this patterns encapsulates the creation of objects and allows you to keep objects of same family together
 
 class Door
 {
