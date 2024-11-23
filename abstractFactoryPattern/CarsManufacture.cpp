@@ -1,5 +1,7 @@
 #include <iostream>
 #include <memory>
+#include <cstring>
+#include <stdexcept>
 using namespace std;
 
 class Door
@@ -7,6 +9,7 @@ class Door
 public:
   Door() {};
   virtual void open() = 0;
+  virtual ~Door() = default;
 };
 
 class GasCarDoor : public Door
@@ -16,7 +19,7 @@ public:
   {
     cout << "this is the sound of a gas car door" << endl;
   }
-  void open()
+  void open() override
   {
     cout << "click" << "\n";
   }
@@ -24,6 +27,7 @@ public:
 
 class ElectricCarDoor : public Door
 {
+public:
   ElectricCarDoor()
   {
     cout << "this is the sound of an electric car door" << endl;
@@ -42,9 +46,10 @@ protected:
 public:
   Engine()
   {
-    strcpy_s(this->sound, "");
+    strcpy(this->sound, "");
   }
   virtual void Run() = 0;
+  virtual ~Engine() = default;
 };
 
 class GasEngine : public Engine
@@ -52,10 +57,10 @@ class GasEngine : public Engine
 public:
   GasEngine()
   {
-    strcpy_s(this->sound, "V12 vrrrrooomm");
+    strcpy(this->sound, "V12 vrrrrooomm");
     cout << "making a gas engine sound" << endl;
   }
-  void Run()
+  void Run() override
   {
     cout << this->sound << endl;
     cout << "a gas engine roars as it accelerates" << "\n";
@@ -70,7 +75,7 @@ public:
     strcpy_s(this->sound, "SHHHHH");
     cout << "making an electric engine" << endl;
   }
-  void Run()
+  void Run() override
   {
     cout << this->sound << endl;
     cout << "an electric engine meows as it cuddle" << "\n";
@@ -142,9 +147,40 @@ int main()
 {
   int selection;
   cout << "select a car you wish to build\n>> ";
-  cout << "1: Gasoline";
-  cout << "2: Electric";
+  cout << "1: Gasoline\n";
+  cout << "2: Electric\n";
   cin >> selection;
+
+  //* converting selection to enum CarType
+  try
+  {
+    CarType model;
+    if (selection == 1)
+    {
+      (model = CarType::Gasoline);
+    }
+    else if (selection == 2)
+    {
+      (model = CarType::Electric);
+    }
+    else
+    {
+      throw runtime_error("no models available for your selection");
+    }
+
+    auto factory = createFactory(model);
+    // manufacture the whole car components
+    auto door = factory->createDoor();
+    auto engine = factory->createEngine();
+    cout << "\nthis is the testing phase of the manufactured components\n";
+    door->open();
+    engine->Run();
+  }
+  catch (const std::exception &e)
+  {
+    std::cerr << e.what() << '\n';
+    return -1;
+  }
 
   return 0;
 }
