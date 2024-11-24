@@ -1,2 +1,12 @@
 .vscode/
 *.exe
+# Ignore Visual Studio/JetBrains Rider folders and files
+.vs/
+*.VC.db
+*.ipch/
+*.sqlite
+
+# Ignore IDE-specific backup and layout files
+*.backup.json
+*.json
+*.v17/

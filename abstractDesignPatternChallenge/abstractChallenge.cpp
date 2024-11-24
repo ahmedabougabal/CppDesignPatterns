@@ -97,7 +97,7 @@ public:
   }
 };
 
-// Derived Dark Green Text class (task 1)
+// Derived Dark Green Text class (task 1) code here
 
 
 // Derived Light Green Text class (task 2)
