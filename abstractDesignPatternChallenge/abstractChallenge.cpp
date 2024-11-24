@@ -98,11 +98,36 @@ public:
 };
 
 // Derived Dark Green Text class (task 1) code here
-
+class DarkGreenText : public Text //* this will be used with the white bkgd
+{
+public:
+  DarkGreenText(HANDLE hConsole)
+  {
+    SetConsoleTextAttribute(hConsole, 242);
+    strcpy_s(_theme, "DarkGreenText");
+  }
+  void message(HANDLE hConsole)
+  {
+    SetConsoleTextAttribute(hConsole, 242);
+    cout << "this is the dark green text on a white bkgd" << endl;
+  }
+};
 
 // Derived Light Green Text class (task 2)
-
-
+class LightGreenText : public Text //* this will be used with the dark theme
+{
+public:
+  LightGreenText(HANDLE hConsole)
+  {
+    SetConsoleTextAttribute(hConsole, 10);
+    strcpy_s(_theme, "LightGreenText");
+  }
+  void message(HANDLE hConsole)
+  {
+    SetConsoleTextAttribute(hConsole, 10);
+    cout << "this is the color 'light green text on a dark bkgd' " << endl;
+  }
+};
 // #pragma endregion Text
 
 // #pragma region Factories
