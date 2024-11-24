@@ -166,6 +166,34 @@ public:
     return new WhiteText(hConsole);
   }
 };
+
+class DarkGreenFactory : public ThemeFactory
+{
+public:
+  Background *setBackground(HANDLE hConsole)
+  {
+    return new LightBkgd(hConsole);
+  }
+  Text *getDefaultText(HANDLE hConsole)
+  {
+    return new DarkGreenText(hConsole);
+  }
+};
+
+class lightGreenFactory : public ThemeFactory
+{
+public:
+  Background *setBackground(HANDLE hConsole)
+  {
+    return new DarkBkgd(hConsole);
+  }
+
+  Text *getDefaultText(HANDLE hConsole)
+  {
+    return new LightGreenText(hConsole);
+  }
+};
+
 // #pragma endregion Factories
 
 int main()
@@ -181,6 +209,8 @@ int main()
   cout << "Select a theme: " << endl;
   cout << "1: Light" << endl;
   cout << "2: Dark" << endl;
+  cout << "3: LightGreen" << endl;
+  cout << "4: DarkGreen" << endl;
   cout << "Selection: ";
   cin >> choice;
   cout << endl;
@@ -193,6 +223,12 @@ int main()
     break;
   case 2:
     app = new DarkFactory;
+    break;
+  case 3:
+    app = new DarkGreenFactory;
+    break;
+  case 4:
+    app = new lightGreenFactory;
     break;
   default:
     cout << "Invalid Selection" << endl;
