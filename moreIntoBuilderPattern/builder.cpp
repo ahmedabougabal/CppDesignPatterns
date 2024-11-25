@@ -173,16 +173,11 @@ public:
 // your code here
 class HotDogMeal : public MealBuilder
 {
-private:
-  MealCombo *meal_combo_hot_dog_meal;
-
-protected:
-  char _meal[100];
 
 public:
   HotDogMeal()
   {
-    this->meal_combo_hot_dog_meal = new MealCombo("HotDog");
+    this->_meal = new MealCombo("HotDog");
     // a pointer should hold / point-to the address of an object of the same type of the pointer except for polymorphhism where a child class is derived from base class
     /*
     this->_meal = new MealCombo("hotfog");
