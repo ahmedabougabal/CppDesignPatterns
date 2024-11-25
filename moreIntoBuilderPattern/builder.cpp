@@ -186,40 +186,71 @@ public:
     These types are incompatible.
     */
   }
-  void cook_dish()
+  void cook_dish() override
   {
-    Dish *hotdog = new HotDog(); //! fixed bug : repplaced new Dish() with new HotDog(), won't cook dish on execution
-    this->meal_combo_hot_dog_meal->set_dish(hotdog);
+    HotDog *hotdog = new HotDog(); //! fixed bug : repplaced new Dish() with new HotDog(), won't cook dish on execution
+    this->_meal->set_dish(hotdog);
   }
-  void prepare_side()
+  void prepare_side() override
   {
-    Salad *salad_ptr = new Salad();
-    this->meal_combo_hot_dog_meal->set_side(salad_ptr);
+    Salad *salad_ptr = new Salad;
+    this->_meal->set_side(salad_ptr);
   }
-  void pour_drink()
+  void pour_drink() override
   {
-    Drink *drink_ptr = new Drink();
-    this->meal_combo_hot_dog_meal->set_drink(drink_ptr);
+    Drink *drink_ptr = new Drink;
+    this->_meal->set_drink(drink_ptr);
   }
   const char *openMealBag()
   {
-    return this->meal_combo_hot_dog_meal->opennMealBag();
+    return this->_meal->opennMealBag();
   }
 
   ~HotDogMeal()
   {
-    delete this->meal_combo_hot_dog_meal;
+    delete this->_meal;
   };
 };
 
 int main()
 {
+  // test cases
   HotDogMeal *hot_dog_ptr = new HotDogMeal();
   hot_dog_ptr->cook_dish();
   hot_dog_ptr->prepare_side();
   hot_dog_ptr->pour_drink();
   cout << "meal contnets : ";
   cout << hot_dog_ptr->openMealBag();
-  delete hot_dog_ptr;
+  // delete hot_dog_ptr;
+  cout << "\n====================================\n";
+  MealBuilder *cook = new MealBuilder();
+  // MealCombo *meal;
+  int choice;
+  cout << " select a meal" << endl;
+  cout << "1 : beef burger" << endl;
+  cout << "2 : hot dogs" << endl;
+  cout << "selection ";
+  cin >> choice;
+  cout << endl;
+  switch (choice)
+  {
+  case 1:
+    cook = new BurgerMeal();
+    break;
+  case 2:
+    cook = new HotDogMeal();
+    break;
+  default:
+    cout << "invalid selection" << "\n";
+    cook = nullptr;
+    break;
+  }
+  if (cook)
+  {
+    cook->cook_dish();
+    cook->pour_drink();
+    cook->prepare_side();
+    cook->get_meal();
+  }
   return 0;
 }
