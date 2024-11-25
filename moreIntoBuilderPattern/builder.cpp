@@ -131,6 +131,7 @@ public:
 
 // Concrete Builder for a Burger Meal which has a burger, fries and a drink
 // your code here
+
 class BurgerMeal : public MealBuilder
 {
 private:
@@ -207,6 +208,7 @@ public:
   {
     return this->meal_combo_hot_dog_meal->opennMealBag();
   }
+
   ~HotDogMeal()
   {
     delete this->meal_combo_hot_dog_meal;
