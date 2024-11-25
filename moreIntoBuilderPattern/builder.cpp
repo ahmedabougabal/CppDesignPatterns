@@ -145,7 +145,7 @@ public:
   };
   void cook_dish()
   {
-    Dish *burger_ptr = new Dish();
+    Dish *burger_ptr = new Burger(); //! another fixed bug
     this->_mealCombo->set_dish(burger_ptr);
   }
   void prepare_side()
@@ -160,7 +160,7 @@ public:
   }
   const char *openMealBag()
   {
-    this->_mealCombo->opennMealBag();
+    return this->_mealCombo->opennMealBag();
   }
   ~BurgerMeal()
   {
@@ -192,7 +192,7 @@ public:
   }
   void cook_dish()
   {
-    Dish *hotdog = new Dish();
+    Dish *hotdog = new HotDog(); //! fixed bug : repplaced new Dish() with new HotDog(), won't cook dish on execution
     this->meal_combo_hot_dog_meal->set_dish(hotdog);
   }
   void prepare_side()
