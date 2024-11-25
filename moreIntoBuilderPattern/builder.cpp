@@ -221,10 +221,10 @@ int main()
   hot_dog_ptr->pour_drink();
   cout << "meal contnets : ";
   cout << hot_dog_ptr->openMealBag();
-  // delete hot_dog_ptr;
+  delete hot_dog_ptr;
   cout << "\n====================================\n";
   MealBuilder *cook = new MealBuilder();
-  // MealCombo *meal;
+  MealCombo *meal = nullptr;
   int choice;
   cout << " select a meal" << endl;
   cout << "1 : beef burger" << endl;
@@ -251,6 +251,8 @@ int main()
     cook->pour_drink();
     cook->prepare_side();
     cook->get_meal();
+    cout << "meal content : " << cook->get_meal()->openMealBag() << endl;
+    delete cook;
   }
   return 0;
 }
