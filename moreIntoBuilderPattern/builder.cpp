@@ -224,7 +224,6 @@ int main()
   delete hot_dog_ptr;
   cout << "\n====================================\n";
   MealBuilder *cook = new MealBuilder();
-  MealCombo *meal = nullptr;
   int choice;
   cout << " select a meal" << endl;
   cout << "1 : beef burger" << endl;
