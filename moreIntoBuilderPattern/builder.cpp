@@ -121,12 +121,16 @@ public:
 class MealBuilder
 {
 protected:
-  char _meal[100];
+  MealCombo *_meal;
 
 public:
-  MealBuilder()
+  //* adds pure virtual functions for the concrete classes to override
+  virtual void cook_dish() {};
+  virtual void prepare_side() {};
+  virtual void pour_drink() {};
+  MealCombo *get_meal()
   {
-    strcpy_s(this->_meal, "");
+    return _meal;
   }
 };
 
