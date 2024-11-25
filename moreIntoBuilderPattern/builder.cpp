@@ -24,10 +24,8 @@ public:
 };
 
 class HotDog : public Dish
-class HotDog : public Dish
 {
 public:
-  HotDog()
   HotDog()
   {
     cout << "\n Grill Hotdogs, add them to a Sandwich " << endl;
@@ -192,7 +190,7 @@ public:
   }
   void cook_dish()
   {
-    HotDog *hotdog = new HotDog();
+    Dish *hotdog = new Dish();
     this->meal_combo_hot_dog_meal->set_dish(hotdog);
   }
   void prepare_side()
