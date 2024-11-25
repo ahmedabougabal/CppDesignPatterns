@@ -132,6 +132,41 @@ public:
 // Concrete Builder for a Burger Meal which has a burger, fries and a drink
 // your code here
 
+class BurgerMeal : public MealBuilder
+{
+private:
+  MealCombo *_mealCombo;
+
+public:
+  BurgerMeal()
+  {
+    this->_mealCombo = new MealCombo("BurgersMeal");
+  };
+  void cook_dish()
+  {
+    Dish *burger_ptr = new Dish();
+    this->_mealCombo->set_dish(burger_ptr);
+  }
+  void prepare_side()
+  {
+    Side *burger_Side_ptr = new Salad();
+    this->_mealCombo->set_side(burger_Side_ptr);
+  }
+  void pour_drink()
+  {
+    Drink *burger_drink_ptr = new Drink();
+    this->_mealCombo->set_drink(burger_drink_ptr);
+  }
+  const char *openMealBag()
+  {
+    this->_mealCombo->opennMealBag();
+  }
+  ~BurgerMeal()
+  {
+    delete _mealCombo;
+  };
+};
+
 // Concrete Builder for a Hotdog Meal which has a hotdog, salad and a drink
 // your code here
 class HotDogMeal : public MealBuilder
@@ -173,4 +208,9 @@ public:
   {
     return this->meal_combo_hot_dog_meal->opennMealBag();
   }
+
+  ~HotDogMeal()
+  {
+    delete this->meal_combo_hot_dog_meal;
+  };
 };
