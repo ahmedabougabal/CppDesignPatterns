@@ -24,8 +24,10 @@ public:
 };
 
 class HotDog : public Dish
+class HotDog : public Dish
 {
 public:
+  HotDog()
   HotDog()
   {
     cout << "\n Grill Hotdogs, add them to a Sandwich " << endl;
