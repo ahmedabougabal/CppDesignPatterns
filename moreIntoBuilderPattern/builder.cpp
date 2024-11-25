@@ -139,36 +139,33 @@ public:
 
 class BurgerMeal : public MealBuilder
 {
-private:
-  MealCombo *_mealCombo;
-
 public:
   BurgerMeal()
   {
-    this->_mealCombo = new MealCombo("BurgersMeal");
+    this->_meal = new MealCombo("BurgersMeal");
   };
-  void cook_dish()
+  void cook_dish() override //! missed this override keyword
   {
-    Dish *burger_ptr = new Burger(); //! another fixed bug
-    this->_mealCombo->set_dish(burger_ptr);
+    Burger *burger_ptr = new Burger; //! another fixed bug, () are optional
+    this->_meal->set_dish(burger_ptr);
   }
-  void prepare_side()
+  void prepare_side() override
   {
-    Side *burger_Side_ptr = new Salad();
-    this->_mealCombo->set_side(burger_Side_ptr);
+    Fries *fries = new Fries;
+    this->_meal->set_side(fries);
   }
-  void pour_drink()
+  void pour_drink() override
   {
     Drink *burger_drink_ptr = new Drink();
-    this->_mealCombo->set_drink(burger_drink_ptr);
+    this->_meal->set_drink(burger_drink_ptr);
   }
   const char *openMealBag()
   {
-    return this->_mealCombo->opennMealBag();
+    return this->_meal->opennMealBag();
   }
   ~BurgerMeal()
   {
-    delete _mealCombo;
+    delete this->_meal;
   };
 };
 
