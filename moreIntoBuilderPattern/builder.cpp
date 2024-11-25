@@ -110,7 +110,7 @@ public:
   {
     this->drink = drink_ptr;
   }
-  const char *opennMealBag()
+  const char *openMealBag()
   {
     sprintf_s(_bag, "\n  %s %s %s %s", _bag, dish->get_dish_name(), side->get_side_name(), drink->get_drink_name());
     return this->_bag;
@@ -161,7 +161,7 @@ public:
   }
   const char *openMealBag()
   {
-    return this->_meal->opennMealBag();
+    return this->_meal->openMealBag();
   }
   ~BurgerMeal()
   {
@@ -203,7 +203,7 @@ public:
   }
   const char *openMealBag()
   {
-    return this->_meal->opennMealBag();
+    return this->_meal->openMealBag();
   }
 
   ~HotDogMeal()
