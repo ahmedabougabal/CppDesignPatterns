@@ -215,3 +215,15 @@ public:
     delete this->meal_combo_hot_dog_meal;
   };
 };
+
+int main()
+{
+  HotDogMeal *hot_dog_ptr = new HotDogMeal();
+  hot_dog_ptr->cook_dish();
+  hot_dog_ptr->prepare_side();
+  hot_dog_ptr->pour_drink();
+  cout << "meal contnets : ";
+  cout << hot_dog_ptr->openMealBag();
+  delete hot_dog_ptr;
+  return 0;
+}
