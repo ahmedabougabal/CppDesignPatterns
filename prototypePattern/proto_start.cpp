@@ -48,6 +48,14 @@ public:
     this->aggressiveness = 2;
     this->intelligence = 7;
   }
+  Sheep *clone() override
+  {
+    return new Sheep(*this);
+  }
+  void shearing()
+  {
+    this->hair_length -= 2;
+  }
 };
 
 // create the derived cow class
