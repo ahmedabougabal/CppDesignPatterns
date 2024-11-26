@@ -87,8 +87,12 @@ int main()
   sheep->clone();
 
   // Instantiate a Cow object
-
-
+  Cow *cow = new Cow();
+  cow->set_hair_color("yellow");
+  cow->set_tail(20);
+  cow->set_weight(150);
+  cow->set_height(23);
+  cow->set_age(3);
 
   return 0;
 }
