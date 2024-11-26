@@ -68,9 +68,27 @@ public:
     this->aggressiveness = 5;
     this->intelligence = 8;
   }
+  // ! override the clone method
+  Cow *clone() override
+  {
+    return new Cow(*this);
+  }
 };
 
 int main()
 {
+  // create initial instance of a Sheep
+  Sheep *sheep = new Sheep();
+  sheep->set_hair_color("orange");
+  sheep->set_tail(5);
+  sheep->set_weight(95);
+  sheep->set_height(1);
+  sheep->set_age(5);
+  sheep->clone();
+
+  // Instantiate a Cow object
+
+
+
   return 0;
 }
