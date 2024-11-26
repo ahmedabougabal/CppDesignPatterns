@@ -85,7 +85,6 @@ int main()
   sheep->set_weight(95);
   sheep->set_height(1);
   sheep->set_age(5);
-  sheep->clone();
 
   // Instantiate a Cow object
   Cow *cow = new Cow();
@@ -94,6 +93,13 @@ int main()
   cow->set_weight(150);
   cow->set_height(23);
   cow->set_age(3);
+
+  Animal *farm[3]; // array which will store the objects of cloned objects
+  farm[0] = sheep->clone();
+  farm[1] = cow->clone();
+  // change a child object property
+  farm[1]->set_weight(1000);
+  farm[2] = sheep->clone();
 
   return 0;
 }
