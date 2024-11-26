@@ -94,12 +94,14 @@ int main()
   cow->set_height(23);
   cow->set_age(3);
 
-  Animal *farm[3]; // array which will store the objects of cloned objects
+  Animal *farm[4]; // array which will store the objects of cloned objects
   farm[0] = sheep->clone();
   farm[1] = cow->clone();
   // change a child object property
   farm[1]->set_weight(1000);
   farm[2] = sheep->clone();
-
+  // shear a sheep and clone it
+  sheep->shearing();
+  farm[3] = sheep->clone();
   return 0;
 }
