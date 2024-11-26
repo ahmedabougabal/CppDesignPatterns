@@ -9,6 +9,8 @@ protected:
   int intelligence, stubborness, aggressiveness;
 
 public:
+  virtual Animal *clone() = 0; // should implement a clone method (pure virtual function) as to apply such pattern
+  // no getters (no way i can get one of those attributes outside the class)
   int set_hair_length(int len)
   {
     this->hair_length = len;
