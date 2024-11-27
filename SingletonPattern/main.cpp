@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <memory>
 using namespace std;
 // concept : app requires an obj to be globally accessed , 1 and only one instance of this object.
 //* 1- should contain a pointer to itself to access its unique instance.
@@ -16,7 +17,7 @@ private:
   {
     cout << "Singleton object Instantiated" << endl;
   }
-  static Singleton *ptr;
+  static unique_ptr<Singleton> ptr;
   static CRITICAL_SECTION critical;
 
 public:
@@ -25,14 +26,14 @@ public:
     EnterCriticalSection(&critical);
     if (ptr == nullptr)
     {
-      ptr = new Singleton();
+      ptr.reset(new Singleton());
     }
     LeaveCriticalSection(&critical);
-    return ptr;
+    return ptr.get(); // return this ptr for access
   }
   ~Singleton()
   {
-    // delete this->ptr;
+    cout << "destroying instance\n";
   }
   static void init_critical_section()
   {
@@ -45,14 +46,16 @@ public:
 };
 
 // intialize a static member outside the class
-Singleton *Singleton::ptr = nullptr;
+unique_ptr<Singleton> Singleton::ptr = nullptr;
 CRITICAL_SECTION Singleton::critical;
 
 int main()
 {
   Singleton::init_critical_section();
-  Singleton *s = nullptr;
-  s->get_instance();
+  Singleton *s1 = Singleton::get_instance();
+  Singleton *another_instance = Singleton::get_instance();
+  cout << s1 << "\n";               // both pointers point to the same memory address
+  cout << another_instance << "\n"; // both pointers point to the same memory address
   Singleton::delete_critical_section();
   return 0;
 }
